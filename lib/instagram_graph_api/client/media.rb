@@ -10,8 +10,8 @@ module InstagramGraphApi
       }.freeze
 
       MEDIA_INFO_HASH = {
-        image: 'id,caption,comments_count,like_count,media_type,media_url,permalink,timestamp,thumbnail_url',
-        video: 'id,caption,comments_count,like_count,media_type,media_url,permalink,timestamp,thumbnail_url',
+        image: 'id,caption,comments_count,like_count,media_type,media_url,permalink,timestamp,thumbnail_url,children{media_url,thumbnail_url,media_type,id}',
+        video: 'id,caption,comments_count,like_count,media_type,media_url,permalink,timestamp,thumbnail_url,children{media_url,thumbnail_url,media_type,id}',
         story: 'caption,media_type,media_url,permalink,timestamp,thumbnail_url'
       }.freeze
 
