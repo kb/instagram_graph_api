@@ -24,14 +24,22 @@ module InstagramGraphApi
         get_connections(id, query)
       end
 
-      def get_media_details(media_id, fields = nil, type: 'image')
+      def get_media_details(media_id, fields = nil, type: 'image', options: {})
         fields ||= MEDIA_INFO_HASH[type.to_sym]
-        get_connections(media_id , "?fields=#{fields}")
+        query = "?fields=#{fields}"
+        query += "&after=#{options[:after]}" if options[:after]
+        query += "&before=#{options[:before]}" if options[:before]
+        get_connections(media_id, query)
+      end
+
+      def get_media_comments(media_id, fields)
+        query = "?fields=#{fields}"
+        get_connections("#{media_id}/comments", query)
       end
 
       def insights(media_id, type: 'image', metrics: nil)
         metrics ||= METRIC_HASH[type.to_sym]
-        @raw_insights = get_connections(media_id , "insights?metric=#{metrics}")
+        @raw_insights = get_connections(media_id, "insights?metric=#{metrics}")
         @raw_insights.reduce({}) do |result, insight_data|
           result[insight_data['name']] = insight_data['values'].first['value']
           result
